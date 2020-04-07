@@ -2,4 +2,5 @@
 .*.swp
 *.o
 bin/
+src/c-bff
 tests/test_stack
