@@ -2,3 +2,4 @@
 .*.swp
 *.o
 bin/
+tests/test_stack
