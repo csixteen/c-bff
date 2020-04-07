@@ -20,6 +20,7 @@
  * SOFTWARE.
  */
 
+#include "errors.h"
 #include "stack.h"
 
 
@@ -46,7 +47,7 @@ void __resize(Stack *s, size_t capacity) {
     int *new_s = (int*)realloc(s->s, capacity * sizeof(int));
 
     if (new_s == NULL) {
-        // Fail miserably
+        errExit("realloc");
     }
     else {
         s->capacity = capacity;
@@ -82,8 +83,7 @@ int stack_peek(Stack *s) {
         return s->s[s->sp-1];
     }
     else {
-        // Fail miserably
-        return -1;
+        errExit("Possible invalid code.");
     }
 }
 

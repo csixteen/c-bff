@@ -9,7 +9,7 @@ errors.o: c_bff.h errors.h
 
 prog.o : prog.h stack.h
 
-stack.o: stack.h
+stack.o: stack.h errors.h
 
 .PHONY : clean
 clean :
