@@ -43,7 +43,7 @@ Stack *create_stack() {
 }
 
 
-void __resize(Stack *s, size_t capacity) {
+static void __resize(Stack *s, size_t capacity) {
     int *new_s = (int*)realloc(s->s, capacity * sizeof(int));
 
     if (new_s == NULL) {

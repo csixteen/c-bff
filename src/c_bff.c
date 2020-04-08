@@ -27,7 +27,7 @@
 #include "errors.h"
 #include "prog.h"
 
-Boolean __is_valid_operator(char c) {
+static Boolean __is_valid_operator(char c) {
     switch (c) {
         case '<' :
         case '>' :
@@ -47,7 +47,7 @@ Boolean __is_valid_operator(char c) {
  * Enter to be pressed.
  * https://stackoverflow.com/questions/421860/capture-characters-from-standard-input-without-waiting-for-enter-to-be-pressed
  */
-char __read_char() {
+static char __read_char() {
     char buf = 0;
 
     struct termios old = {0};
@@ -78,7 +78,7 @@ char __read_char() {
 /*
  * Executes Brainfuck instruction Code[<Instruction Pointer>].
  */
-void __execute_instruction(Program *p) {
+static void __execute_instruction(Program *p) {
     int offset = 1;
 
     switch (p->code[p->ip]) {
