@@ -34,7 +34,7 @@
  */
 Stack *create_stack() {
     Stack *s = (Stack*)malloc(sizeof(struct stack));
-    s->capacity = 5;
+    s->capacity = STACK_INITIAL_CAPACITY;
     s->len = 0;
     s->sp = 0;
     s->s = (int*)malloc(s->capacity * sizeof(int));

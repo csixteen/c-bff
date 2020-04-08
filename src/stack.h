@@ -25,6 +25,8 @@
 
 #include <stdlib.h>
 
+#define STACK_INITIAL_CAPACITY 5
+
 typedef struct stack {
     int *s;           // the Stack
     size_t len;       // Number of elements

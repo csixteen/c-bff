@@ -1,7 +1,7 @@
 OBJECTS := c_bff.o prog.o stack.o errors.o
 
 c-bff : $(OBJECTS)
-	@$(CC) -Wall -o c-bff $(OBJECTS)
+	@$(CC) -std=c99 -D_XOPEN_SOURCE=600 -Wall -o c-bff $(OBJECTS)
 
 c_bff.o : c_bff.h prog.h errors.h
 
@@ -13,4 +13,4 @@ stack.o: stack.h errors.h
 
 .PHONY : clean
 clean :
-	rm c-bff $(OBJECTS)
+	@rm -f c-bff $(OBJECTS)

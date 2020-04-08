@@ -25,6 +25,10 @@
 #include "c_bff.h"
 #include "errors.h"
 
+#ifdef __GNUC__
+__attribute__ ((__noreturn__))
+#endif
+
 
 static void terminate(Boolean useExit3) {
     char *s;

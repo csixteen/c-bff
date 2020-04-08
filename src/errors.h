@@ -23,7 +23,20 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
-void errExit(const char *format, ...);
-void usageErr(const char *format, ...);
+#ifdef __GNUC__
+
+/*
+ * This macro stops 'gcc -Wall' complaining that "control reaches
+ * end of non-void function" if we use the following functions to
+ * terminate some non-void functions (e.g. in `stack` module)
+ */
+
+#define NORETURN __attribute__ ((__noreturn__))
+#else
+#define NORETURN
+#endif
+
+void errExit(const char *format, ...) NORETURN ;
+void usageErr(const char *format, ...) NORETURN ;
 
 #endif
