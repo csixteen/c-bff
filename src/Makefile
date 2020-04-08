@@ -14,7 +14,3 @@ stack.o: stack.h errors.h
 .PHONY : clean
 clean :
 	rm c-bff $(OBJECTS)
-
-.PHONY : test
-test :
-	cd tests && $(MAKE)
