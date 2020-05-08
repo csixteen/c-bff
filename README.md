@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/csixteen/c-bff.svg?branch=master)](https://travis-ci.org/csixteen/c-bff)
+
 # c-bff
 
 Simple [Brainfuck](https://esolangs.org/wiki/Brainfuck) interpreter written in C.
