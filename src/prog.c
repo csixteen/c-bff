@@ -20,8 +20,6 @@
  * SOFTWARE.
  */
 
-#include <stdlib.h>
-
 #include "c_bff.h"
 #include "prog.h"
 #include "stack.h"
@@ -38,9 +36,116 @@ Program *create_program(char *code) {
     return p;
 }
 
-void delete_program(Program *p) {
+void free_program(Program *p) {
     free(p->code);
     free(p->cells);
 
     free(p);
+}
+
+/*
+ * Captures a single character from STDIN without waiting for
+ * Enter to be pressed.
+ * https://stackoverflow.com/questions/421860/capture-characters-from-standard-input-without-waiting-for-enter-to-be-pressed
+ */
+static char __read_char() {
+    char buf = 0;
+
+    struct termios old = {0};
+    if (tcgetattr(0, &old) < 0)
+        perror("tcsetattr()");
+
+    old.c_lflag &= ~ICANON;
+    old.c_lflag &= ~ECHO;
+    old.c_cc[VMIN] = 1;
+    old.c_cc[VTIME] = 0;
+
+    if (tcsetattr(0, TCSANOW, &old) < 0)
+        perror("tcsetattr ICANON");
+
+    if (read(0, &buf, 1) < 0)
+        perror ("read()");
+
+    old.c_lflag |= ICANON;
+    old.c_lflag |= ECHO;
+
+    if (tcsetattr(0, TCSADRAIN, &old) < 0)
+        perror ("tcsetattr ~ICANON");
+
+    return (buf);
+}
+
+static void __execute_next_instruction(Program *p) {
+    int offset = 1;
+
+    switch (p->code[p->ip]) {
+        case '>':
+            p->cursor++;
+            break;
+        case '<':
+            p->cursor--;
+            break;
+        case '+':
+            p->cells[p->cursor]++;
+            break;
+        case '-':
+            p->cells[p->cursor]--;
+            break;
+        case ',':
+            p->cells[p->cursor] = __read_char();
+            break;
+        case '.':
+            printf("%c", p->cells[p->cursor]);
+            break;
+        case '[':
+            if (p->cells[p->cursor] > 0) {
+                stack_push(p->stack, p->ip);
+            }
+            else {
+                if (p->cells[p->cursor] > 0) {
+                    stack_push(p->stack, p->ip);
+                }
+                else {
+                    int i = p->ip + 1;
+                    int skipped = 0;
+
+                    while (i < strlen(p->code)) {
+                        switch (p->code[i]) {
+                            case '[':
+                                skipped += 1;
+                                break;
+                            case ']':
+                                if (skipped == 0) { i++; break; }
+                                else { skipped -= 1; }
+                                break;
+                        }
+
+                        i++;
+                    }
+
+                    offset = i - p->ip;
+                }
+            }
+            break;
+        case ']':
+            if (p->cells[p->cursor] == 0) {
+                stack_pop(p->stack);
+            }
+            else {
+                int top = stack_peek(p->stack);
+                offset = top - p->ip + 1;
+            }
+            break;
+    }
+
+    p->ip += offset;
+}
+
+/*
+ * Executes the program while the Instruction Pointer
+ * hasn't reached the end of the code.
+ */
+void execute_program(Program *p) {
+    while (p->ip < strlen(p->code))
+        __execute_next_instruction(p);
 }

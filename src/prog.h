@@ -23,6 +23,8 @@
 #ifndef PROG_H
 #define PROG_H
 
+#include <termios.h>
+
 #include "stack.h"
 
 typedef struct prog {
@@ -35,6 +37,7 @@ typedef struct prog {
 
 
 Program *create_program(char *code);
-void delete_program(Program *p);
+void free_program(Program *p);
+void execute_program(Program *p);
 
 #endif
