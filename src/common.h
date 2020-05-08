@@ -20,18 +20,8 @@
  * SOFTWARE.
  */
 
-#ifndef C_BFF_H
-#define C_BFF_H
-
-#include <errno.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
-#include "errors.h"
-
-#define MAX_CELLS 30000
+#ifndef COMMON_H
+#define COMMON_H
 
 typedef enum { FALSE, TRUE } Boolean;
 

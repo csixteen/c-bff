@@ -22,9 +22,11 @@
 
 #include <fcntl.h>
 
-#include "c_bff.h"
+#include "common.h"
 #include "errors.h"
 #include "prog.h"
+
+#define MAX_CELLS 30000
 
 
 static Boolean __is_valid_operator(char c) {
@@ -36,8 +38,8 @@ static Boolean __is_valid_operator(char c) {
         case '[' :
         case ']' :
         case ',' :
-        case '.' : return TRUE;
-        default: return FALSE;
+        case '.' : return 1;
+        default : return 0;
     }
 }
 
@@ -67,11 +69,11 @@ char *load_code(char *file_name) {
     char *code = (char*)malloc(code_size * sizeof(char));
 
     lseek(fd, 0, SEEK_SET);
+
     while ((n = read(fd, buf, BUFSIZ)) > 0) {
         for (int i = 0; i < n; i++) {
-            if (__is_valid_operator(buf[i])) {
+            if (__is_valid_operator(buf[i]))
                 code[pos++] = buf[i];
-            }
         }
     }
 
@@ -94,7 +96,7 @@ int main(int argc, char **argv) {
 
     char *code = load_code(argv[1]);
 
-    Program *p = create_program(code);
+    Program *p = create_program(code, MAX_CELLS);
     execute_program(p);
 
     free_program(p);

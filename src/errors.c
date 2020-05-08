@@ -20,9 +20,6 @@
  * SOFTWARE.
  */
 
-#include <stdarg.h>
-
-#include "c_bff.h"
 #include "errors.h"
 
 #ifdef __GNUC__

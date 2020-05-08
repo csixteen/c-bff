@@ -20,17 +20,16 @@
  * SOFTWARE.
  */
 
-#include "c_bff.h"
 #include "prog.h"
 #include "stack.h"
 
-Program *create_program(char *code) {
+Program *create_program(char *code, int num_cells) {
     Program *p = (Program*)malloc(sizeof(struct prog));
 
     p->ip = 0;
     p->cursor = 0;
     p->code = code;
-    p->cells = (char*)malloc(MAX_CELLS * sizeof(char));
+    p->cells = (char*)malloc(num_cells * sizeof(char));
     p->stack = create_stack();
 
     return p;

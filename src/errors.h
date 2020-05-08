@@ -23,6 +23,15 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
+#include <errno.h>
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
+#include "common.h"
+
 #ifdef __GNUC__
 
 /*

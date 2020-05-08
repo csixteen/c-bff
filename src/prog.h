@@ -23,7 +23,10 @@
 #ifndef PROG_H
 #define PROG_H
 
+#include <stdio.h>
+#include <string.h>
 #include <termios.h>
+#include <unistd.h>
 
 #include "stack.h"
 
@@ -36,7 +39,7 @@ typedef struct prog {
 } Program;
 
 
-Program *create_program(char *code);
+Program *create_program(char *code, int num_cells);
 void free_program(Program *p);
 void execute_program(Program *p);
 
