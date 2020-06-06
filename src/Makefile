@@ -1,9 +1,9 @@
-OBJECTS := c_bff.o prog.o stack.o errors.o
+OBJECTS := main.o prog.o stack.o errors.o
 
 c-bff : $(OBJECTS)
 	@$(CC) -std=c99 -D_XOPEN_SOURCE=600 -Wall -o c-bff $(OBJECTS)
 
-c_bff.o : common.h prog.h errors.h
+main.o : common.h prog.h errors.h
 
 errors.o: common.h errors.h
 
